@@ -8,7 +8,7 @@ function Push(names, data) {
     this.names = names;
 }
 
-Push.prototype.getName = function(author) {
+Push.prototype._getUsername = function(author) {
     var gh_username;
     if('login' in author) {
         gh_username = author.login;
@@ -16,12 +16,18 @@ Push.prototype.getName = function(author) {
         gh_username = author.username;
     } else {
         gh_username = author.name;
-    }
-
-    if(gh_username in this.names) {
-        return this.names[gh_username].realname + " (" + this.names[gh_username].nick + ")";
-    }
+    }   
     return gh_username;
+};
+
+Push.prototype.getName = function(author) {
+    var username = this._getUsername(author);
+    return (username in this.names ? this.names[username].realname : username);
+};
+
+Push.prototype.getNick = function(author) {
+    var username = this._getUsername(author);
+    return (username in this.names ? this.names[username].nick : username);
 };
 
 Push.prototype.unescapeMessage = function(msg) {

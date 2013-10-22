@@ -22,7 +22,6 @@ imgit_irc.once('registered', function(msg) {
 });
 
 var imgit_http = http.createServer(function(request, response) {
-    console.log("incoming connection from " + request.socket.remoteAddress);
     var fact = new factory();
 
     fact.addName('jacobgreenleaf', 'Jacob', 'jacobimgur');
