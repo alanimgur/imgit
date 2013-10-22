@@ -15,7 +15,7 @@ imgit_irc.addListener('error', function(msg) {});
 var factory = new Factory();
 
 factory.addName('jacobgreenleaf', 'Jacob', 'jacobimgur');
-factory.addName('briankassouf', 'Brian', 'briango');
+factory.addName('briankassouf', 'Brian', 'brianimgur');
 factory.addName('lospro7', 'Carlos', 'imgurlos');
 factory.addName('Timgur', 'Tony', 'timgur');
 factory.addName('jimgur', 'Jim', 'jimgur');
