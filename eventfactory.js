@@ -1,5 +1,6 @@
 var push_empty = require('./event/push/empty'),
     push_commits = require('./event/push/commits'),
+    emptyevent = require('./event/empty'),
     pullreq = require('./event/pullrequest');
 
 function EventFactory(names) {
