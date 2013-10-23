@@ -18,7 +18,7 @@ Imgur.prototype.handle = function(request, response) {
                 e = this.factory.build(event_type, req);
             if(e != null) {
                 //console.log(e.toString());
-                this.irc.say('##imgur-office', e.toString());
+                this.irc.say('##imgur-office', '[imgur] ' + e.toString());
             }
         } catch(e) {
             console.log(e);
