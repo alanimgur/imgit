@@ -4,6 +4,7 @@ var Irc = require('irc'),
     EventFactory = require('./eventfactory'),
     Imgur = require('./repos/imgur'),
     Imgit = require('./repos/imgit'),
+    GitIO = require('./gitio'),
     fs = require('fs');
 
 try {
@@ -38,8 +39,9 @@ irc.addListener('error', function(msg) {
     console.error(msg);
 }); 
 
+var gitio = new GitIO();
 var efactory = new EventFactory(config.github);
-var imgur = new Imgur(efactory);
+var imgur = new Imgur(efactory, gitio);
 
 var server = Http.createServer(function(request, response) {
     if(request.url == "/imgur") {

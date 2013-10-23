@@ -1,7 +1,9 @@
-var emptyevent = require('../event/empty');
+var emptyevent = require('../event/empty'),
+    pullreq = require('../event/pullrequest');
 
-function Imgur(factory) {
+function Imgur(factory, gitio) {
     this.factory = factory;
+    this.gitio = gitio;
 }
 
 Imgur.prototype.handle = function(request, output) {
@@ -25,7 +27,12 @@ Imgur.prototype.handle = function(request, output) {
         var e = this.factory.build(event_type, req);
 
         if(!(e instanceof emptyevent)) {
-            output(e.toString());
+            if(e instanceof pullreq) {
+                var tpl = e.getTemplate();
+                this.gitio.template(tpl, output);
+            } else {
+                output(e.toString());
+            }
         }
     }.bind(this));
 };

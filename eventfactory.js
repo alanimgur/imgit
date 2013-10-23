@@ -3,8 +3,9 @@ var push_empty = require('./event/push/empty'),
     emptyevent = require('./event/empty'),
     pullreq = require('./event/pullrequest');
 
-function EventFactory(names) {
+function EventFactory(names, gitio) {
     this.names = names;
+    this.gitio = gitio;
 }
 
 EventFactory.prototype.addName = function(gitname, realname, nick) {
@@ -27,7 +28,7 @@ EventFactory.prototype.build = function(event_type, data) {
             if(data.action == 'synchronize') 
                 return new emptyevent();
 
-            return new pullreq(this.names, data);
+            return new pullreq(this.names, data, this.gitio);
 
         default:
             console.log("got unknown event " + event_type);

@@ -8,11 +8,12 @@ function PullRequest(names, data) {
     this.author = data.pull_request.user;
     this.sender = data.sender;
     this.action = data.action;
+    this.url = data.pull_request.html_url;
 }
 
 util.inherits(PullRequest, Push);
 
-PullRequest.prototype.toString = function() {
+PullRequest.prototype.getTemplate = function() {
     var author = this.getName(this.author),
         sender = this.getName(this.sender),
         title = this.unescapeMessage(this.title);
@@ -23,7 +24,12 @@ PullRequest.prototype.toString = function() {
         author_posessive = "his own";
     }
 
-    return sender + " " + this.action + " " + author_posessive + " pull request #" + this.number + " (" + title + ")";
+    return {
+        'urls': {
+            'PRQURL': this.url
+        },
+        'template': sender + " " + this.action + " " + author_posessive + " pull request #" + this.number + " ({PRQURL}): " + title + ""
+    };
 };
 
 
