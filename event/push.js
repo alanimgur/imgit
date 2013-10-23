@@ -34,4 +34,15 @@ Push.prototype.unescapeMessage = function(msg) {
     return msg.replace(new RegExp('\\\\', 'g'), '').replace(new RegExp('\\+', 'g'), ' ');
 };
 
+
+Push.prototype.TRIM_MESSAGE_LENGTH = 200;
+Push.prototype.trimMessage = function(msg) {
+    var trimmed = msg.replace(new RegExp('\n', 'g'), ' / ').substr(0, this.TRIM_MESSAGE_LENGTH);
+
+    if(msg.length > this.TRIM_MESSAGE_LENGTH) {
+        trimmed += " [...]";
+    }
+    return trimmed;
+};
+
 module.exports = Push;

@@ -17,6 +17,7 @@ Imgur.prototype.handle = function(request, response) {
             var req = JSON.parse(body);
                 e = this.factory.build(event_type, req);
             if(e != null) {
+                //console.log(e.toString());
                 this.irc.say('##imgur-office', e.toString());
             }
         } catch(e) {

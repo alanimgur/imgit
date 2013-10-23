@@ -10,7 +10,7 @@ util.inherits(PushEmpty, Push);
 PushEmpty.prototype.toString = function() {
     var pusher = this.getName(this.pusher),
         ref = this.ref,
-        msg = this.unescapeMessage(this.message);
+        msg = this.trimMessage(this.unescapeMessage(this.message));
 
     if(ref.indexOf('refs/heads/') === 0) {
         ref = ref.replace(/refs\/heads\/(.*)/, "[$1]");

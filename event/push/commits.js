@@ -39,9 +39,7 @@ PushCommits.prototype.toString = function() {
     var pusher = this.getName(this.pusher),
         commits = this.getContributors(this.commits),
         ref = this.ref,
-        msg = this.unescapeMessage(this.message);
-
-    msg = msg.replace(new RegExp('\n', 'g'), ' ');
+        msg = this.trimMessage(this.unescapeMessage(this.message));
 
     if(ref.indexOf('refs/heads/') === 0) {
         ref = ref.replace(/refs\/heads\/(.*)/, "[$1]");
