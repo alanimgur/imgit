@@ -23,6 +23,7 @@ EventFactory.prototype.build = function(event_type, data) {
             }
             break;
         case 'pull_request':
+            if(data.action == 'synchronize') return;
             return new pullreq(this.names, data);
             break;
         default:

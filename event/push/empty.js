@@ -16,7 +16,7 @@ PushEmpty.prototype.toString = function() {
         ref = ref.replace(/refs\/heads\/(.*)/, "[$1]");
     }
     
-    return pusher + " moved " + ref + ": " + msg;
+    return pusher + " updated " + ref + ": " + msg;
 };
 
 module.exports = PushEmpty;

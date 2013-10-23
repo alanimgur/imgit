@@ -26,8 +26,8 @@ PushCommits.prototype.getContributors = function(commits) {
 
     // descending commits
     commit_stats_list.sort(function(alpha, beta) {
-        if(alpha.count > beta.count) { return 1; }
-        else if(alpha.count < beta.count) { return -1; }
+        if(alpha.count < beta.count) { return 1; }
+        else if(alpha.count > beta.count) { return -1; }
 
         return 0;
     });
@@ -41,19 +41,35 @@ PushCommits.prototype.toString = function() {
         ref = this.ref,
         msg = this.unescapeMessage(this.message);
 
+    msg = msg.replace(new RegExp('\n', 'g'), ' ');
+
     if(ref.indexOf('refs/heads/') === 0) {
         ref = ref.replace(/refs\/heads\/(.*)/, "[$1]");
     }
     
-    var commits_str = "",
-        commits_total = 0;
-    for(var i = 0, commit = commits[i]; i < commits.length; i++, commit = commits[i]) {
-        commits_total += commit.count;
-        commits_str += commit.name + " (" + commit.count + ")";
-        commits_str += (i == commits.length - 1) ? '' : ', ';
+    if(commits.length == 1) {
+        commits_total = commits[0].count;
+        if(commits[0].name == pusher) {
+            commits_str = "himself";
+        } else {
+            commits_str = commits[0].name;
+        }
+    } else {
+        var commits_str = "",
+            commits_total = 0;
+        for(var i = 0, commit = commits[i]; i < commits.length; i++, commit = commits[i]) {
+            commits_total += commit.count;
+
+            var name = (commit.name == pusher ? "himself" : commit.name);
+            commits_str += name + " (" + commit.count + ")";
+
+            if(i != commits.length - 1) {
+                commits_str += (i != commits.length - 2) ? ', ' : ', and ';
+            }
+        }
     }
 
-    return pusher + " pushed " + commits_total + " commits by " + commits_str + " to " + ref + ": " + msg;
+    return pusher + " pushed " + commits_total + " commits from " + commits_str + " to " + ref + ": " + msg;
 };
 
 module.exports = PushCommits;

@@ -16,11 +16,13 @@ Imgur.prototype.handle = function(request, response) {
         try {
             var req = JSON.parse(body);
                 e = this.factory.build(event_type, req);
-            this.irc.say('##imgur-office', e.toString());
+            if(e != null) {
+                this.irc.say('##imgur-office', e.toString());
+            }
         } catch(e) {
             console.log(e);
         }
-    });
+    }.bind(this));
 };
 
 module.exports = Imgur;

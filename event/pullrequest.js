@@ -10,6 +10,8 @@ function PullRequest(names, data) {
     this.action = data.action;
 }
 
+util.inherits(PullRequest, Push);
+
 PullRequest.prototype.toString = function() {
     var author = this.getName(this.author),
         sender = this.getName(this.sender),
@@ -17,10 +19,12 @@ PullRequest.prototype.toString = function() {
 
     var author_posessive = author + (author.substring(-1) == 's' ? "'" : "'s");
 
+    if(author == sender) {
+        author_posessive = "his own";
+    }
+
     return sender + " " + this.action + " " + author_posessive + " pull request #" + this.number + " (" + title + ")";
 };
 
-PullRequest.prototype.getName = Push.prototype.getName;
-PullRequest.prototype.unescapeMessage = Push.prototype.unescapeMessage;
 
 module.exports = PullRequest;
