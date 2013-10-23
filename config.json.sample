@@ -1,0 +1,22 @@
+{
+    "debug": false,
+    "irc": {
+        "server": "irc.foobar.com",
+        "broadcast_channel": "#foo",
+        "nick": "foo"
+    },
+    "http": {
+        "port": 10000
+    },
+    "github": {
+        "username": {
+            "name": "John Smith",
+            "irc": "jsmith"
+        },
+
+        "suzieqpublic": {
+            "name": "Suzie",
+            "irc": "suzieq"
+        }
+    }
+}

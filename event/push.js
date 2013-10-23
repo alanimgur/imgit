@@ -22,12 +22,12 @@ Push.prototype._getUsername = function(author) {
 
 Push.prototype.getName = function(author) {
     var username = this._getUsername(author);
-    return (username in this.names ? this.names[username].realname : username);
+    return (username in this.names ? this.names[username].name : username);
 };
 
 Push.prototype.getNick = function(author) {
     var username = this._getUsername(author);
-    return (username in this.names ? this.names[username].nick : username);
+    return (username in this.names ? this.names[username].irc : username);
 };
 
 Push.prototype.unescapeMessage = function(msg) {

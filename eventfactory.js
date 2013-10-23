@@ -2,14 +2,14 @@ var push_empty = require('./event/push/empty'),
     push_commits = require('./event/push/commits'),
     pullreq = require('./event/pullrequest');
 
-function EventFactory() {
-    this.names = {};
+function EventFactory(names) {
+    this.names = names;
 }
 
 EventFactory.prototype.addName = function(gitname, realname, nick) {
     this.names[gitname] = {
-        'realname': realname,
-        'nick': nick
+        'name': realname,
+        'irc': nick
     };
 };
 
@@ -21,14 +21,16 @@ EventFactory.prototype.build = function(event_type, data) {
             } else {
                 return new push_empty(this.names, data);
             }
-            break;
+
         case 'pull_request':
-            if(data.action == 'synchronize') return;
+            if(data.action == 'synchronize') 
+                return new emptyevent();
+
             return new pullreq(this.names, data);
-            break;
+
         default:
             console.log("got unknown event " + event_type);
-            break;
+            return new emptyevent();
     }
 };
 

@@ -1,35 +1,53 @@
-var irc = require('irc'),
-    http = require('http'),
+var Irc = require('irc'),
+    Http = require('http'),
     util = require('util'),
-    Factory = require('./eventfactory'),
+    EventFactory = require('./eventfactory'),
     Imgur = require('./repos/imgur'),
-    Imgit = require('./repos/imgit');
+    Imgit = require('./repos/imgit'),
+    fs = require('fs');
 
-var imgit_irc = new irc.Client('irc.freenode.net', 'imgit', {
-    channels: ['##imgur-office'],
-    userName: 'imgit',
-    autoConnect: !!true
-});
-imgit_irc.addListener('error', function(msg) {});
+try {
+    var config_contents = fs.readFileSync(__dirname + '/config.json');
+} catch(e) {
+    console.log("missing config file 'config.json'. maybe copy from 'config.json.sample'?");
+    process.exit(1);
+}
 
-var factory = new Factory();
+try {
+    var config = JSON.parse(config_contents);
+} catch(e) {
+    console.log("config.json: invalid json");
+    process.exit(1);
+}
 
-factory.addName('jacobgreenleaf', 'Jacob', 'jacobimgur');
-factory.addName('briankassouf', 'Brian', 'brianimgur');
-factory.addName('lospro7', 'Carlos', 'imgurlos');
-factory.addName('Timgur', 'Tony', 'timgur');
-factory.addName('jimgur', 'Jim', 'jimgur');
-factory.addName('alanimgur', 'Alan', 'alanimgur');
-factory.addName('talklittle', 'Andrew', 'talklittle');
-
-var imgur = new Imgur(factory, imgit_irc);
-
-var imgit_http = http.createServer(function(request, response) {
-    if(request.url == "/imgur") {
-        return imgur.handle(request, response);
+var output = (function(str) {
+    if(config.debug) {
+        console.log(str);
     } else {
-        console.log('got request for ' + request.url);
+        irc.say(config.irc.broadcast_channel, '[imgit] ' + str);
     }
 });
 
-imgit_http.listen(10050);
+var irc = new Irc.Client(config.irc.server, config.irc.nick, {
+    channels: [config.irc.broadcast_channel],
+    userName: config.irc.nick,
+    autoConnect: !config.debug
+});
+
+irc.addListener('error', function(msg) {
+    console.error(msg);
+}); 
+
+var efactory = new EventFactory(config.github);
+var imgur = new Imgur(efactory);
+
+var server = Http.createServer(function(request, response) {
+    if(request.url == "/imgur") {
+        imgur.handle(request, output);
+    } else {
+        console.info('got unknown request for ' + request.url);
+    }
+});
+
+server.listen(config.http.port);
+console.log("imgit connected to " + config.irc.server + ", broadcasting to " + config.irc.broadcast_channel + " and listening on port " + config.http.port);
