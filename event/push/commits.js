@@ -67,7 +67,9 @@ PushCommits.prototype.toString = function() {
         }
     }
 
-    return pusher + " pushed " + commits_total + " commits from " + commits_str + " to " + ref + ": " + msg;
+    var plural = (commits_total === 1 ? '' : 's');
+
+    return pusher + " pushed " + commits_total + " commit" + plural + " from " + commits_str + " to " + ref + ": " + msg;
 };
 
 module.exports = PushCommits;

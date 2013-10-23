@@ -1,3 +1,5 @@
+var emptyevent = require('../event/empty');
+
 function Imgur(factory) {
     this.factory = factory;
 }
@@ -22,7 +24,7 @@ Imgur.prototype.handle = function(request, output) {
 
         var e = this.factory.build(event_type, req);
 
-        if(e != null) {
+        if(!(e instanceof emptyevent)) {
             output(e.toString());
         }
     }.bind(this));

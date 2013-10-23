@@ -42,6 +42,7 @@ Push.prototype.trimMessage = function(msg) {
     if(msg.length > this.TRIM_MESSAGE_LENGTH) {
         trimmed += " [...]";
     }
+
     return trimmed;
 };
 
