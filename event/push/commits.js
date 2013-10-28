@@ -3,6 +3,8 @@ var util = require('util'),
 
 function PushCommits(names, data) {
     Push.call(this, names, data);
+    this.head = data.head_commit;
+    this.message = data.head_commit.message;
 }
 
 util.inherits(PushCommits, Push);

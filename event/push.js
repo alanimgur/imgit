@@ -1,7 +1,5 @@
 function Push(names, data) {
     this.ref = data.ref;
-    this.head = data.head_commit;
-    this.message = data.head_commit.message;
     this.pusher = data.pusher;
     this.commits = data.commits;
 
