@@ -2,6 +2,8 @@ function Push(names, data) {
     this.ref = data.ref;
     this.pusher = data.pusher;
     this.commits = data.commits;
+    this.repo = data.repository.name;
+    this.message = data.head_commit.message;
 
     this.names = names;
 }

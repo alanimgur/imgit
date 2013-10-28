@@ -3,6 +3,7 @@ var util = require('util'),
 
 function PullRequest(names, data) {
     this.names = names;
+    this.repo = data.repository.name;
     this.number = data.pull_request.number;
     this.title = data.pull_request.title;
     this.author = data.pull_request.user;
@@ -28,7 +29,7 @@ PullRequest.prototype.getTemplate = function() {
         'urls': {
             'PRQURL': this.url
         },
-        'template': sender + " " + this.action + " " + author_posessive + " pull request #" + this.number + " ( {PRQURL} ): " + title + ""
+        'template': sender + " " + this.action + " " + author_posessive + " pull request #" + this.number + " ( {PRQURL} ) on " + this.repo + ": " + title + ""
     };
 };
 

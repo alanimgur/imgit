@@ -4,7 +4,6 @@ var util = require('util'),
 function PushCommits(names, data) {
     Push.call(this, names, data);
     this.head = data.head_commit;
-    this.message = data.head_commit.message;
 }
 
 util.inherits(PushCommits, Push);
@@ -71,7 +70,7 @@ PushCommits.prototype.toString = function() {
 
     var plural = (commits_total === 1 ? '' : 's');
 
-    return pusher + " pushed " + commits_total + " commit" + plural + " from " + commits_str + " to " + ref + ": " + msg;
+    return pusher + " pushed " + commits_total + " commit" + plural + " from " + commits_str + " to " + this.repo + " " + ref + ": " + msg;
 };
 
 module.exports = PushCommits;
