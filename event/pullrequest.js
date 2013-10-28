@@ -28,7 +28,7 @@ PullRequest.prototype.getTemplate = function() {
         'urls': {
             'PRQURL': this.url
         },
-        'template': sender + " " + this.action + " " + author_posessive + " pull request #" + this.number + " ({PRQURL}): " + title + ""
+        'template': sender + " " + this.action + " " + author_posessive + " pull request #" + this.number + " ( {PRQURL} ): " + title + ""
     };
 };
 
