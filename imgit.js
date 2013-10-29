@@ -1,4 +1,5 @@
-var Irc = require('irc'),
+var Irc = require('irc')
+    IrcColors = require('irc-colors'),
     Http = require('http'),
     util = require('util'),
     EventFactory = require('./eventfactory'),
@@ -25,7 +26,7 @@ var output = (function(str) {
     if(config.debug) {
         console.log(str);
     } else {
-        irc.say(config.irc.broadcast_channel, '[imgit] ' + str);
+        irc.say(config.irc.broadcast_channel, IrcColors.grey('[imgit] ' + str));
     }
 });
 
