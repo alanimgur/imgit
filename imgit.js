@@ -1,4 +1,4 @@
-var Irc = require('irc')
+var Irc = require('irc'),
     IrcColors = require('irc-colors'),
     Http = require('http'),
     util = require('util'),
